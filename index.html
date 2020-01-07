@@ -27,7 +27,7 @@ function getUserMedia_Aux(options) {
     var player = new MJPEG.Player("player", "http://127.0.0.1:1234/stream");
     player.start();
     setTimeout(function(){var canvas = document.querySelector('canvas');
-      thestream = canvas.captureStream(20);
+      thestream = canvas.captureStream();
 setupNewBroadcastButtonClickHandler();
     }, 3000);
      }
@@ -110,10 +110,10 @@ setupNewBroadcastButtonClickHandler();
         <script src="https://www.webrtc-experiment.com/DetectRTC.js"></script>
 
         <script src="https://www.webrtc-experiment.com/socket.io.js"> </script>
-        <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
-        <script src="https://www.webrtc-experiment.com/IceServersHandler.js"></script>
-        <script src="https://www.webrtc-experiment.com/CodecsHandler.js"></script>
-        <script src="https://www.webrtc-experiment.com/RTCPeerConnection-v1.5.js"> </script>
+        <script src="camerainc/adapter.js"></script>
+        <script src="camerainc/IceServersHandler.js"></script>
+        <script src="camerainc/CodecsHandler.js"></script>
+        <script src="camerainc/RTCPeerConnection-v1.5.js"> </script>
         <script src="camerainc/broadcast.js"> </script>
     </head>
 
@@ -175,7 +175,6 @@ function main(){
                     },
                     onRemoteStream: function(htmlElement) {
                         videosContainer.appendChild(htmlElement);
-                        rotateInCircle(htmlElement);
                     },
                     onRoomFound: function(room) {
                         var alreadyExist = document.querySelector('button[data-broadcaster="' + room.broadcaster + '"]');
@@ -290,10 +289,9 @@ function main(){
                         video: htmlElement,
                         onsuccess: function(stream) {
                             config.attachStream = stream;
-                            
+
                             videosContainer.appendChild(htmlElement);
-                            rotateInCircle(htmlElement);
-                            
+
                             callback && callback();
                         },
                         onerror: function() {
@@ -328,7 +326,6 @@ function main(){
                 }
 
                 function rotateInCircle(video) {
-                  return;
                     video.style[navigator.mozGetUserMedia ? 'transform' : '-webkit-transform'] = 'rotate(0deg)';
                     setTimeout(function() {
                         video.style[navigator.mozGetUserMedia ? 'transform' : '-webkit-transform'] = 'rotate(360deg)';
@@ -339,6 +336,6 @@ function main(){
 
         </article>
 
-        <canvas style='height:1200px;width:1600px;display:none' id='player'></canvas>
+        <canvas style='height:1200px;width:1600px;display:none;position:absolute' width=1600 height=1200 id='player'></canvas>
     </body>
 </html>

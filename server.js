@@ -38,7 +38,7 @@ camera.start();
 
 var boundary = '--boundandrebound';
 
-var PORT = 9001;
+var PORT = 1234;
 
 const jsonPath = {
     config: 'config.json',

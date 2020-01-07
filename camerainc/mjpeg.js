@@ -90,6 +90,8 @@ var MJPEG = (function(module) {
 
     function updateFrame(img) {
       data77 = img;
+      console.log(img.naturalWidth, img.naturalHeight)
+      console.log(canvas.width, canvas.height)
         img.crossOrigin = 'Anonymous';
         var srcRect = {
           x: 0, y: 0,
