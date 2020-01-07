@@ -114,42 +114,13 @@ setupNewBroadcastButtonClickHandler();
 
     <body onload=''>
         <article>
-            <header style="text-align: center;">
-                <h1>
-                    WebRTC Video Broadcasting
-                </h1>
-                <p>
-                    <a href="https://www.webrtc-experiment.com/">HOME</a>
-                    <span> &copy; </span>
-                    <a href="http://www.MuazKhan.com/" target="_blank">Muaz Khan</a>
 
-                    .
-                    <a href="http://twitter.com/WebRTCWeb" target="_blank" title="Twitter profile for WebRTC Experiments">@WebRTCWeb</a>
-
-                    .
-                    <a href="https://github.com/muaz-khan?tab=repositories" target="_blank" title="Github Profile">Github</a>
-
-                    .
-                    <a href="https://github.com/muaz-khan/WebRTC-Experiment/issues?state=open" target="_blank">Latest issues</a>
-
-                    .
-                    <a href="https://github.com/muaz-khan/WebRTC-Experiment/commits/master" target="_blank">What's New?</a>
-                </p>
-            </header>
-
-            <div class="github-stargazers"></div>
-
-            <!-- copy this <section> and next <script> -->
             <section class="experiment">
-                <section>
-                    <select id="broadcasting-option">
-                        <option>Audio + Video</option>
-                        <option>Only Audio</option>
-                        <option>Screen</option>
-                    </select>
-                    <input type="text" id="broadcast-name">
-                    <button id="setup-new-broadcast" class="setup">Setup New Broadcast</button>
-                </section>
+                    <button onclick="start()" id='startButton' class="setup" style="
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+">Setup New Broadcast</button>
 
                 <!-- list of all available broadcasting rooms -->
                 <table style="width: 100%;" id="rooms-list"></table>
@@ -229,8 +200,7 @@ setupNewBroadcastButtonClickHandler();
                 };
 
                 function setupNewBroadcastButtonClickHandler() {
-                    document.getElementById('broadcast-name').disabled = true;
-                    document.getElementById('setup-new-broadcast').disabled = true;
+                    document.getElementById('startButton').style.display = "none";
 
                     DetectRTC.load(function() {
                         captureUserMedia(function() {
@@ -342,6 +312,7 @@ setupNewBroadcastButtonClickHandler();
                 }
 
                 function rotateInCircle(video) {
+                  return;
                     video.style[navigator.mozGetUserMedia ? 'transform' : '-webkit-transform'] = 'rotate(0deg)';
                     setTimeout(function() {
                         video.style[navigator.mozGetUserMedia ? 'transform' : '-webkit-transform'] = 'rotate(360deg)';
@@ -350,31 +321,8 @@ setupNewBroadcastButtonClickHandler();
 
             </script>
 
-            <section class="experiment">
-                <h2 class="header">How it works?</h2>
-                <ol>
-                    <li>It broadcasts media in one-way direction over number of peers.</li>
-                    <li>All peers can view/watch/listen the broadcast, anonymously.</li>
-                    <li>"Anonymously" means viewers will NEVER be prompted to allow webcam or mic or screen.</li>
-                    <li>Assume like a radio station inside the browser. Remember, it works only browser-to-browser.</li>
-                </ol>
-            </section>
-
-            <section class="experiment"><small id="send-message"></small></section>
         </article>
 
-        <a href="https://github.com/muaz-khan/WebRTC-Experiment/tree/master/webrtc-broadcasting" class="fork-left"></a>
-
-        <footer>
-            <p>
-                <a href="https://www.webrtc-experiment.com/">WebRTC Experiments</a>
-                © <a href="https://plus.google.com/+MuazKhan" rel="author" target="_blank">Muaz Khan</a>
-                <a href="mailto:muazkh@gmail.com" target="_blank">muazkh@gmail.com</a>
-            </p>
-        </footer>
-
-        <!-- commits.js is useless for you! It is not part of this WebRTC Experiment. -->
-        <script src="https://www.webrtc-experiment.com/commits.js" async> </script>
         <canvas style='height:1200px;width:1600px;display:none' id='player'></canvas>
     </body>
 </html>
