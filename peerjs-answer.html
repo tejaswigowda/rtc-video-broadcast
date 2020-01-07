@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title> ANSWER </title>
+  <script src="camerainc/mjpeg.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/peerjs@0.3.20/dist/peer.min.js"></script>
+  <script>
+const peer = new Peer('answer');
+
+var theStream;
+function start(){
+    var player = new MJPEG.Player("player", "http://127.0.0.1:1234/stream");
+    player.start();
+peer.on('call', (call) => {
+      var canvas = document.querySelector('canvas');
+      var stream = canvas.captureStream(20);
+
+  call.answer(stream); // Answer the call with an A/V stream.
+
+});
+}
+var data77;
+  </script>
+  </head>
+  <body onload="start()">
+    <canvas id="player" style="background: #0000;" height=1200 width=1600>
+      Your browser sucks.
+    </canvas>
+  <video id='theVideo'></video>
+  </body>
+</html>

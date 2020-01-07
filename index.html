@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <title>Player</title>
+  </head>
+  <body style='margin:0' onload='start()'>
+    <canvas id="player" style="background: #0000;" height=1200 width=1600>
+      Your browser sucks.
+    </canvas>
+    <video id='v1' autoplay controls fullscreen style='width:100vw;max-height:100vh;top:0;left:0;display:none;position:fixed'> </video>
+  </body>
+  <script src="camerainc/mjpeg.js"></script>
+  <script>
+  function start(){
+    var player = new MJPEG.Player("player", "http://127.0.0.1:1234/stream");
+    player.start();
+      streamToVideoElement() 
+     setTimeout( 'setInterval("forever()", 1000)', 4000);
+     }
+    function forever(){
+      if(canvas = document.querySelector("canvas").toDataURL().length< 2000){
+      //  window.location.reload();
+      start();
+      }
+    }
+   function streamToVideoElement(){
+    setTimeout(function(){
+      var canvas = document.querySelector('canvas');
+      var stream = canvas.captureStream(20);
+
+      var video1 = document.querySelector('video:nth-of-type(1)');
+      video1.style.display = "block"
+      video1.srcObject = stream;
+  //    var video2 = document.querySelector('video:nth-of-type(2)');
+  //    video2.srcObject = stream;
+      setTimeout(function(){canvas.style.display = "none"}, 1000);
+    }, 5000);
+   }
+    var data77;
+  </script>
+</html>
