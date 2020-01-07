@@ -117,7 +117,14 @@ setupNewBroadcastButtonClickHandler();
         <script src="camerainc/broadcast.js"> </script>
     </head>
 
-    <body onload=''>
+    <script>
+function main(){
+  if(localStorage.getItem("rtcmode") === "transmit"){
+    start();
+  }
+}
+    </script>
+    <body onload='main()'>
         <article>
 
             <section class="experiment">
@@ -179,6 +186,7 @@ setupNewBroadcastButtonClickHandler();
                         var tr = document.createElement('tr');
                         tr.innerHTML = '<td><strong>' + room.roomName + '</strong> is broadcasting his media!</td>' +
                             '<td><button class="join">Join</button></td>';
+                        roomsList.innerHTML = "";
                         roomsList.appendChild(tr);
 
                         var joinRoomButton = tr.querySelector('.join');
@@ -195,6 +203,9 @@ setupNewBroadcastButtonClickHandler();
                             });
                             hideUnnecessaryStuff();
                         };
+  if(localStorage.getItem("rtcmode") !== "transmit"){
+                        joinRoomButton.click();
+  }
                     },
                     onNewParticipant: function(numberOfViewers) {
                         document.title = 'Viewers: ' + numberOfViewers;
