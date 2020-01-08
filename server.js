@@ -70,6 +70,7 @@ function serverHandler(request, response) {
       response.write(jpeg);
       next();
     };
+ //   ws.on("close", function(e){console.log(e)});
     camera.pipe(ws);
     response.on('close', function() {
       unpipe(camera);

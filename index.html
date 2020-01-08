@@ -13,6 +13,8 @@
         <script>
 var data77, thestream;
 
+var frameC = 1;
+var frameLen = [1,2,3,4,5,6,7,8,9,10];
 function getUserMedia_Aux(options) {
             var video = options.video;
             if (video) {
@@ -29,7 +31,7 @@ function getUserMedia_Aux(options) {
     setTimeout(function(){var canvas = document.querySelector('canvas');
       thestream = canvas.captureStream();
 setupNewBroadcastButtonClickHandler();
-    }, 3000);
+    }, 300);
      }
 
      if(!location.hash.replace('#', '').length) {
@@ -203,7 +205,7 @@ function main(){
                             hideUnnecessaryStuff();
                         };
   if(localStorage.getItem("rtcmode") !== "transmit"){
-                        joinRoomButton.click();
+    setTimeout(function(){   joinRoomButton.click()}, 100);
   }
                     },
                     onNewParticipant: function(numberOfViewers) {

@@ -62,7 +62,7 @@ var MJPEG = (function(module) {
     options.url = url;
     options.onFrame = updateFrame;
     options.onStart = function() { console.log("started"); }
-    options.onError = function() { console.log("error"); }
+    options.onError = function() { console.log("error");window.location.reload() }
     options.onStop = function() { console.log("stopped");
       //window.location.reload(); 
       start();
@@ -89,9 +89,6 @@ var MJPEG = (function(module) {
     }
 
     function updateFrame(img) {
-      data77 = img;
-      console.log(img.naturalWidth, img.naturalHeight)
-      console.log(canvas.width, canvas.height)
         img.crossOrigin = 'Anonymous';
         var srcRect = {
           x: 0, y: 0,
@@ -114,9 +111,34 @@ var MJPEG = (function(module) {
                 dstRect.height
               );
         console.log(".");
+      data77 = canvas.toDataURL();
+      frameLen.shift();
+      frameLen.push(data77.length);
+      frameC++;
+      if(frameC% 13 === 0){
+        if(canvas.toDataURL().length < 50000){
+         window.location.reload();
+        }
+        
+        function isArraySame(){
+          for(var i = 0; i < frameLen.length-1; i++){
+            for(var j = i; j < frameLen.length; j++){
+              if(frameLen[i] != frameLen[j]){
+                return false;
+              }
+            }
+          }
+          return true;
+        }
+        if(isArraySame()){
+         window.location.reload();
+
+        }
+      }
       } catch (e) {
         // if we can't draw, don't bother updating anymore
         self.stop();
+        window.location.reload();
         console.log("!");
         throw e;
       }
