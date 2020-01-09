@@ -40,18 +40,11 @@ if (!program.url) {
 }
 
 
-// Create a new MjpegCamera object
-var camera = new MjpegCamera({
-  user: program.user || '',
-  password: program.password || '',
-  url: program.url,
-  name: typeof program.name === 'function' ? '' : program.name
-});
-camera.start();
-
 var boundary = '--boundandrebound';
 
 var PORT = 1234;
+
+var allCameras = {};
 
 const jsonPath = {
     config: 'config.json',
@@ -73,7 +66,31 @@ if(PORT === 9001) {
 }
 
 function serverHandler(request, response) {
-        if (/stream/.test(request.url)) {
+    if (/stream/.test(request.url)) {
+
+        var camera;
+        const query = url.parse(request.url,true).query;
+        if(query.url){
+         var link = query.url;
+         console.log(link)
+         console.log(Object.keys(allCameras))
+          if(allCameras[link]){
+            camera = allCameras[link]
+          }
+          else{
+            camera = new MjpegCamera({
+              user: '',
+              password: '',
+              url: link,
+              name: new Date()
+            });
+            camera.start();
+            allCameras[link] = camera;
+          }
+        }
+        else{
+          return;
+        }
 
     response.writeHead(200, {'Access-Control-Allow-Origin' : '*' ,'Content-Type': 'multipart/x-mixed-replace; boundary=' + boundary});
     var ws = new WriteStream({objectMode: true});
@@ -83,9 +100,10 @@ function serverHandler(request, response) {
       response.write(jpeg);
       next();
     };
- //   ws.on("close", function(e){console.log(e)});
     camera.pipe(ws);
+    
  //   camera.pipe(fileWriter);
+ //   ws.on("close", function(e){console.log(e)});
 
     response.on('close', function() {
       unpipe(camera);
