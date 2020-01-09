@@ -23,6 +23,7 @@ var MJPEG = (function(module) {
     self.img.src = self.url;
 
     function setRunning(running) {
+
       self.running = running;
       if (self.running) {
         self.img.src = self.url;
@@ -41,6 +42,10 @@ var MJPEG = (function(module) {
           self.onStop();
         }
       }
+   setTimeout(function(){var canvas = document.querySelector('canvas');
+      thestream = canvas.captureStream();
+setupNewBroadcastButtonClickHandler();
+    },1200);
     }
 
     self.start = function() { setRunning(true); }
@@ -61,11 +66,12 @@ var MJPEG = (function(module) {
     }
     options.url = url;
     options.onFrame = updateFrame;
-    options.onStart = function() { console.log("started"); }
-    options.onError = function() { console.log("error");window.location.reload() }
-    options.onStop = function() { console.log("stopped");
+    options.onStart = function() { console.log("started");
+   
+    }
+    options.onError = function() { alert("error");window.location.reload() }
+    options.onStop = function() { alert("stopped");
       //window.location.reload(); 
-      start();
       }
 
     self.stream = new module.Stream(options);
@@ -115,7 +121,7 @@ var MJPEG = (function(module) {
       frameLen.shift();
       frameLen.push(data77.length);
       frameC++;
-      if(frameC% 13 === 0){
+      if(frameC% 8 === 0){
         if(canvas.toDataURL().length < 50000){
          window.location.reload();
         }

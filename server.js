@@ -9,8 +9,21 @@ var WriteStream = require('stream').Writable;
 var program = require('commander');
 var unpipe = require('unpipe');
 
-var Peer = require('simple-peer')
-var wrtc = require('wrtc')
+var FileOnWrite = require('file-on-write');
+
+// Create a writable stream to generate files
+var fileWriter = new FileOnWrite({
+  path: './frames',
+  ext: '.jpeg',
+  filename: function(frame) {
+    return frame.name + '-' + frame.time;
+  },
+  transform: function(frame) {
+    return frame.data;
+  }
+});
+
+
 
 
 
@@ -72,6 +85,8 @@ function serverHandler(request, response) {
     };
  //   ws.on("close", function(e){console.log(e)});
     camera.pipe(ws);
+ //   camera.pipe(fileWriter);
+
     response.on('close', function() {
       unpipe(camera);
     });
