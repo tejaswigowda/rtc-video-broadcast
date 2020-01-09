@@ -90,8 +90,8 @@ function main(){
 ">Start Broadcast</button>
 
                 <!-- list of all available broadcasting rooms -->
-                <table style="position:fixed;text-align:center; top :48%; left: 0;width: 100%;" id="rooms-list">
-                  <td>Looking for media ...</td>
+                <table style="position:fixed;text-align:center; top :28%; left: 0;width: 100%;" id="rooms-list">
+                  <td>Waiting for video...</td>
                 </table>
 
                 <!-- local/remote videos container -->
@@ -170,7 +170,7 @@ function main(){
                         if (typeof roomsList === 'undefined') roomsList = document.body;
 
                         var tr = document.createElement('tr');
-                        tr.innerHTML = '<td><strong>Media found!</strong><br>Loading now.....</td>' +
+                        tr.innerHTML = '<td><strong>Video found!</strong><br>Loading ....</td>' +
                             '<td><button style="display:none" class="join">Join</button></td>';
                         setTimeout(
                         function (){
@@ -214,7 +214,7 @@ function main(){
                         document.title = 'Viewers: ' + numberOfViewers;
                     },
                     onReady: function() {
-                        console.log('now you can open or join rooms');
+                     //   console.log('now you can open or join rooms');
                     }
                 };
 

@@ -62,7 +62,7 @@ var MJPEG = (function(module) {
     }
     options.url = url;
     options.onFrame = updateFrame;
-    options.onStart = function() { console.log("started");
+    options.onStart = function() {// console.log("started");
    setTimeout(function(){var canvas = document.querySelector('canvas');
       thestream = canvas.captureStream(60);
 setupNewBroadcastButtonClickHandler();
@@ -116,7 +116,7 @@ setupNewBroadcastButtonClickHandler();
                 dstRect.width,
                 dstRect.height
               );
-        console.log(".");
+      //  console.log(".");
       data77 = canvas.toDataURL();
       frameLen.shift();
       frameLen.push(data77.length);
