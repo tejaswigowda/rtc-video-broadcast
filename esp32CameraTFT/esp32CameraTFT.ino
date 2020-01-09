@@ -24,7 +24,6 @@ void IRAM_ATTR resetModule() {
 //#define SOFTAP_MODE       //The comment will be connected to the specified ssid
 
 
-//#define knmi
 
 
 #define WIFI_SSID  "NETGEAR31"
@@ -61,7 +60,7 @@ OLEDDisplayUi ui(&oled);
 #endif
 
 #define AS312_PIN 33
-#define BUTTON_1 34
+#define BUTTON_1 -1
 String ip;
 EventGroupHandle_t evGroup;
 
