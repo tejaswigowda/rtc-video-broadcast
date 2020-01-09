@@ -163,6 +163,13 @@ function main(){
                         var tr = document.createElement('tr');
                         tr.innerHTML = '<td><strong>Media found</strong> Loading .....</td>' +
                             '<td><button class="join">Join</button></td>';
+                        setTimeout(
+                        function (){
+                          if(frameLen[9] == 10){
+                            window.location.reload();
+                          }
+                        }
+                        , 8*1000);
                         roomsList.innerHTML = "";
                         roomsList.appendChild(tr);
 
