@@ -27,17 +27,6 @@ var fileWriter = new FileOnWrite({
 
 
 
-program
-  .option('-u --user []', 'Set the username for camera authentication')
-  .option('-pw --password []', 'Set the password for camera authentication')
-  .option('-l --url []', 'Set the url for the camera')
-  .option('-p --port [3000]', 'Set the port for the http server to listen on', parseInt)
-  .option('-n --name [camera]', 'Set the name of the camera')
-  .parse(process.argv);
-
-if (!program.url) {
-  program.help();
-}
 
 
 var boundary = '--boundandrebound';
@@ -72,8 +61,6 @@ function serverHandler(request, response) {
         const query = url.parse(request.url,true).query;
         if(query.url){
          var link = query.url;
-         console.log(link)
-         console.log(Object.keys(allCameras))
           if(allCameras[link]){
             camera = allCameras[link]
           }

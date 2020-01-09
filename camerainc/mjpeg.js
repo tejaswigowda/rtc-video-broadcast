@@ -69,9 +69,9 @@ setupNewBroadcastButtonClickHandler();
     options.onStart = function() { console.log("started");
    
     }
-    options.onError = function() { alert("error");window.location.reload() }
-    options.onStop = function() { alert("stopped");
-      //window.location.reload(); 
+    options.onError = function() { window.location.reload() }
+    options.onStop = function() { 
+      window.location.reload(); 
       }
 
     self.stream = new module.Stream(options);
