@@ -42,10 +42,6 @@ var MJPEG = (function(module) {
           self.onStop();
         }
       }
-   setTimeout(function(){var canvas = document.querySelector('canvas');
-      thestream = canvas.captureStream();
-setupNewBroadcastButtonClickHandler();
-    },1200);
     }
 
     self.start = function() { setRunning(true); }
@@ -67,6 +63,10 @@ setupNewBroadcastButtonClickHandler();
     options.url = url;
     options.onFrame = updateFrame;
     options.onStart = function() { console.log("started");
+   setTimeout(function(){var canvas = document.querySelector('canvas');
+      thestream = canvas.captureStream();
+setupNewBroadcastButtonClickHandler();
+    },1200);
    
     }
     options.onError = function() { window.location.reload() }

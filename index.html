@@ -26,13 +26,9 @@ function getUserMedia_Aux(options) {
 
 
   function start(){
-    var player = new MJPEG.Player("player", "http://127.0.0.1:1234/stream?url=" + window.location.hash.replace("#",""));
+    var player = new MJPEG.Player("player", "http://127.0.0.1:1234/stream?url=" + window.location.hash.replace("#","") + "&t=" + new Date().getTime());
     player.start();
-  /*  setTimeout(function(){var canvas = document.querySelector('canvas');
-      thestream = canvas.captureStream();
-setupNewBroadcastButtonClickHandler();
-    },2000);*/
-     }
+   }
 
      if(!location.hash.replace('#', '').length) {
                 location.href = location.href.split('#')[0] + '#' + (Math.random() * 100).toString().replace('.', '');
@@ -123,7 +119,40 @@ function main(){
                         socket.on('message', config.onmessage);
                     },
                     onRemoteStream: function(htmlElement) {
-                        videosContainer.appendChild(htmlElement);
+                          videosContainer.appendChild(htmlElement);
+                            function step() {
+                              var c = document.getElementById('recCanvas');
+                              var ctx = c.getContext('2d');
+                              var v = document.querySelector("video");
+                              ctx.drawImage(v, 0, 0, c.width, c.height)
+                              requestAnimationFrame(step)
+      data77 = c.toDataURL();
+      frameLen.shift();
+      frameLen.push(data77.length);
+      frameC++;
+      if(frameC% 8 === 0){
+        if(c.toDataURL().length < 50000){
+         window.location.reload();
+        }
+        
+        function isArraySame(){
+          for(var i = 0; i < frameLen.length-1; i++){
+            for(var j = i; j < frameLen.length; j++){
+              if(frameLen[i] != frameLen[j]){
+                return false;
+              }
+            }
+          }
+          return true;
+        }
+        if(isArraySame()){
+         window.location.reload();
+
+        }
+      }
+                            }
+                            requestAnimationFrame(step);
+                       //     alert("start")
                     },
                     onRoomFound: function(room) {
                         var alreadyExist = document.querySelector('button[data-broadcaster="' + room.broadcaster + '"]');
@@ -150,11 +179,12 @@ function main(){
                                 joinUser: broadcaster
                             });
                             hideUnnecessaryStuff();
-                            recCanvas = document.getElementById("recCanvas");
 
                         };
   if(localStorage.getItem("rtcmode") !== "transmit"){
-    setTimeout(function(){   joinRoomButton.click()}, 10);
+    setTimeout(function(){   joinRoomButton.click()
+    
+    }, 10);
   }
   else{
    //   data77 = canvas.toDataURL();
@@ -178,19 +208,20 @@ function main(){
                     DetectRTC.load(function() {
                         captureUserMedia(function() {
                             var shared = 'video';
+                            /*
                             if (window.option == 'Only Audio') {
                                 shared = 'audio';
                             }
                             if (window.option == 'Screen') {
                                 shared = 'screen';
                             }
+                            */
 
                             broadcastUI.createRoom({
                                 roomName: (document.getElementById('broadcast-name') || { }).value || 'Anonymous',
                                 isAudio: shared === 'audio'
                             });
                         });
-                        hideUnnecessaryStuff();
                     });
                 }
 
@@ -243,6 +274,10 @@ function main(){
                         htmlElement.setAttribute('controls', true);
                     }
 
+                    htmlElement.onerror = function(e){
+                      alert(e);
+                    }
+
                     var mediaConfig = {
                         video: htmlElement,
                         onsuccess: function(stream) {
@@ -251,6 +286,8 @@ function main(){
                             videosContainer.appendChild(htmlElement);
 
                             callback && callback();
+                       
+
                         },
                         onerror: function() {
                             if (option === 'Only Audio') alert('unable to get access to your microphone');
@@ -338,9 +375,10 @@ function download() {
   a.click();
   setTimeout(() => {
     document.body.removeChild(a);
-    window.URL.revokeObjectURL(url);
+    window.URL.revokeObjectlRL(url);
   }, 100);
 }
+
             </script>
 
         </article>
