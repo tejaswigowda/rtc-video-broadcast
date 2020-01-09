@@ -63,15 +63,18 @@ var MJPEG = (function(module) {
     options.url = url;
     options.onFrame = updateFrame;
     options.onStart = function() {// console.log("started");
-   setTimeout(function(){var canvas = document.querySelector('canvas');
+
+                           console.log(new Date());
+   setTimeout(function(){
+     var canvas = document.querySelector('canvas');
       thestream = canvas.captureStream(60);
-setupNewBroadcastButtonClickHandler();
+      setTimeout("setupNewBroadcastButtonClickHandler()", 100);
     },1200);
    
     }
     options.onError = function() { window.location.reload() }
     options.onStop = function() { 
-      window.location.reload(); 
+      window.location.reload(true); 
       }
 
     self.stream = new module.Stream(options);

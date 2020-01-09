@@ -127,6 +127,7 @@ function main(){
                         socket.on('message', config.onmessage);
                     },
                     onRemoteStream: function(htmlElement) {
+                  
                           videosContainer.appendChild(htmlElement);
                             function step() {
                               var c = document.getElementById('recCanvas');
@@ -139,9 +140,9 @@ function main(){
       frameLen.shift();
       frameLen.push(data77.length);
       frameC++;
-      if(frameC% 8 === 0){
+      if(frameC% 6 === 0){
         if(c.toDataURL().length < 50000){
-         window.location.reload();
+         window.location.reload(true);
         }
         
         function isArraySame(){
@@ -155,13 +156,13 @@ function main(){
           return true;
         }
         if(isArraySame()){
-         window.location.reload();
+         window.location.reload(true);
 
         }
       }
                             }
                             requestAnimationFrame(step);
-                       //     alert("start")
+                           console.log(new Date());
                     },
                     onRoomFound: function(room) {
                         var alreadyExist = document.querySelector('button[data-broadcaster="' + room.broadcaster + '"]');
@@ -175,7 +176,7 @@ function main(){
                         setTimeout(
                         function (){
                           if(frameLen[9] == 10){
-                            window.location.reload();
+                            window.location.reload(true);
                           }
                         }
                         , 8*1000);
@@ -186,7 +187,7 @@ function main(){
                         joinRoomButton.setAttribute('data-broadcaster', room.broadcaster);
                         joinRoomButton.setAttribute('data-roomToken', room.broadcaster);
                         joinRoomButton.onclick = function() {
-                            this.disabled = true;
+                           console.log(new Date());
 
                             var broadcaster = this.getAttribute('data-broadcaster');
                             var roomToken = this.getAttribute('data-roomToken');
@@ -219,7 +220,6 @@ function main(){
                 };
 
                 function setupNewBroadcastButtonClickHandler() {
-                    document.getElementById('startButton').style.display = "none";
 
                     DetectRTC.load(function() {
                         captureUserMedia(function() {
@@ -235,7 +235,8 @@ function main(){
 
                             broadcastUI.createRoom({
                                 roomName: (document.getElementById('broadcast-name') || { }).value || 'Anonymous',
-                                isAudio: shared === 'audio'
+                             //   isAudio: shared === 'audio'
+                                isAudio: shared === false
                             });
                         });
                     });
@@ -244,6 +245,7 @@ function main(){
                 function captureUserMedia(callback) {
                     var constraints = null;
                     window.option = broadcastingOption ? broadcastingOption.value : '';
+                    /*
                     if (option === 'Only Audio') {
                         constraints = {
                             audio: true,
@@ -274,8 +276,9 @@ function main(){
                     if (option != 'Only Audio' && option != 'Screen' && DetectRTC.hasWebcam !== true) {
                         alert('DetectRTC library is unable to find webcam; maybe you denied webcam access once and it is still denied or maybe webcam device is not attached to your system or another app is using same webcam.');
                     }
+                    */
 
-                    var htmlElement = document.createElement(option === 'Only Audio' ? 'audio' : 'video');
+                    var htmlElement = document.createElement('video');
 
                     htmlElement.muted = true;
                     htmlElement.volume = 0;
@@ -302,7 +305,15 @@ function main(){
                             videosContainer.appendChild(htmlElement);
 
                             callback && callback();
-                       
+                           htmlElement.onclick = function(){
+                       if (htmlElement.requestFullscreen) {
+      htmlElement.requestFullscreen();
+    } else if (htmlElement.mozRequestFullScreen) {
+      htmlElement.mozRequestFullScreen();
+    } else if (htmlElement.webkitRequestFullscreen) {
+      htmlElement.webkitRequestFullscreen();
+    }
+                      }
 
                         },
                         onerror: function() {

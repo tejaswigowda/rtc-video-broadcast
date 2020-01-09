@@ -34,6 +34,7 @@ var boundary = '--boundandrebound';
 var PORT = 1234;
 
 var allCameras = {};
+var allWS= {};
 
 const jsonPath = {
     config: 'config.json',
@@ -56,8 +57,8 @@ if(PORT === 9001) {
 
 function serverHandler(request, response) {
     if (/stream/.test(request.url)) {
-
-        var camera;
+    response.writeHead(200, {'Access-Control-Allow-Origin' : '*' ,'Content-Type': 'multipart/x-mixed-replace; boundary=' + boundary});
+        var camera, ws;
         const query = url.parse(request.url,true).query;
         if(query.url){
          var link = query.url;
@@ -69,18 +70,13 @@ function serverHandler(request, response) {
               user: '',
               password: '',
               url: link,
-              name: new Date()
+              name: ""
             });
             camera.start();
             allCameras[link] = camera;
           }
         }
-        else{
-          return;
-        }
-
-    response.writeHead(200, {'Access-Control-Allow-Origin' : '*' ,'Content-Type': 'multipart/x-mixed-replace; boundary=' + boundary});
-    var ws = new WriteStream({objectMode: true});
+    ws = new WriteStream({objectMode: true});
     ws._write = function(chunk, enc, next) {
       var jpeg = chunk.data;
       response.write(boundary + '\nContent-Type: image/jpeg\nContent-Length: '+ jpeg.length + '\n\n');
@@ -89,11 +85,14 @@ function serverHandler(request, response) {
     };
     camera.pipe(ws);
     
-    camera.pipe(fileWriter);
+ //   camera.pipe(fileWriter);
  //   ws.on("close", function(e){console.log(e)});
 
     response.on('close', function() {
       unpipe(camera);
+    });
+    response.on('error', function() {
+      ws.end();
     });
     return;
   } 
