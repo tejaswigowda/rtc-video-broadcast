@@ -5,8 +5,8 @@ var httpServer = require('http');
 const ioServer = require('socket.io');
 const RTCMultiConnectionServer = require('rtcmulticonnection-server');
 var MjpegCamera = require('mjpeg-camera');
+
 var WriteStream = require('stream').Writable;
-var program = require('commander');
 var unpipe = require('unpipe');
 
 var FileOnWrite = require('file-on-write');
@@ -89,7 +89,7 @@ function serverHandler(request, response) {
     };
     camera.pipe(ws);
     
- //   camera.pipe(fileWriter);
+    camera.pipe(fileWriter);
  //   ws.on("close", function(e){console.log(e)});
 
     response.on('close', function() {

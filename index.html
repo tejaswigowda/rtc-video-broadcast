@@ -20,6 +20,7 @@ function getUserMedia_Aux(options) {
             if (video) {
                 video.srcObject = thestream;
                 video.play();
+                video.addEventListener("pause", function(e){video.play()})
             }
             options.onsuccess && options.onsuccess(thestream);
 }
@@ -43,6 +44,13 @@ function getUserMedia_Aux(options) {
 
 
         <style>
+        html{
+          overflow:hidden;
+          width: 100vw;
+          height: 100vh;
+          color: white;
+          background: black;
+        }
             audio, video {
               width: 100vw;
               position: fixed;
@@ -73,21 +81,21 @@ function main(){
 }
     </script>
     <body onload='main()'>
-        <article>
 
-            <section class="experiment">
                     <button onclick="start()" id='startButton' class="setup" style="
     position: fixed;
+    display:none;
     bottom: 10px;
     right: 10px;
 ">Start Broadcast</button>
 
                 <!-- list of all available broadcasting rooms -->
-                <table style="width: 100%;" id="rooms-list"></table>
+                <table style="position:fixed;text-align:center; top :48%; left: 0;width: 100%;" id="rooms-list">
+                  <td>Looking for media ...</td>
+                </table>
 
                 <!-- local/remote videos container -->
                 <div id="videos-container"></div>
-            </section>
     </body>
 
             <script>
@@ -124,6 +132,7 @@ function main(){
                               var c = document.getElementById('recCanvas');
                               var ctx = c.getContext('2d');
                               var v = document.querySelector("video");
+                v.addEventListener("pause", function(e){v.play()})
                               ctx.drawImage(v, 0, 0, c.width, c.height)
                               requestAnimationFrame(step)
       data77 = c.toDataURL();
@@ -161,8 +170,8 @@ function main(){
                         if (typeof roomsList === 'undefined') roomsList = document.body;
 
                         var tr = document.createElement('tr');
-                        tr.innerHTML = '<td><strong>Media found</strong> Loading .....</td>' +
-                            '<td><button class="join">Join</button></td>';
+                        tr.innerHTML = '<td><strong>Media found!</strong><br>Loading now.....</td>' +
+                            '<td><button style="display:none" class="join">Join</button></td>';
                         setTimeout(
                         function (){
                           if(frameLen[9] == 10){
@@ -274,11 +283,11 @@ function main(){
                     try {
                         htmlElement.setAttributeNode(document.createAttribute('autoplay'));
                         htmlElement.setAttributeNode(document.createAttribute('playsinline'));
-                        htmlElement.setAttributeNode(document.createAttribute('controls'));
+                      //  htmlElement.setAttributeNode(document.createAttribute('controls'));
                     } catch (e) {
                         htmlElement.setAttribute('autoplay', true);
                         htmlElement.setAttribute('playsinline', true);
-                        htmlElement.setAttribute('controls', true);
+                     //   htmlElement.setAttribute('controls', false);
                     }
 
                     htmlElement.onerror = function(e){
@@ -382,13 +391,12 @@ function download() {
   a.click();
   setTimeout(() => {
     document.body.removeChild(a);
-    window.URL.revokeObjectlRL(url);
+    window.URL.revokeObjectURL(url);
   }, 100);
 }
 
             </script>
 
-        </article>
 
         <canvas style='height:1200px;width:1600px;display:none;position:absolute' width=1600 height=1200 id='player'></canvas>
         <canvas style='height:1200px;width:1600px;display:none;position:absolute' width=1600 height=1200 id='recCanvas'></canvas>

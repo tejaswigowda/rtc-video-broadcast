@@ -64,7 +64,7 @@ var MJPEG = (function(module) {
     options.onFrame = updateFrame;
     options.onStart = function() { console.log("started");
    setTimeout(function(){var canvas = document.querySelector('canvas');
-      thestream = canvas.captureStream();
+      thestream = canvas.captureStream(60);
 setupNewBroadcastButtonClickHandler();
     },1200);
    
