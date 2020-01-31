@@ -11,23 +11,41 @@
 
   <script src="camerainc/mjpeg.js"></script>
         <script>
+
+
+function convertImgToDataURLviaCanvas(img, callback){
+
+    var img = new Image();
+    img.crossOrigin = 'Anonymous';
+        var canvas = document.createElement('CANVAS');
+        var ctx = canvas.getContext('2d');
+        var dataURL;
+        canvas.height = img.height;
+        canvas.width = img.width;
+        ctx.drawImage(img, 0, 0);
+        dataURL = canvas.toDataURL("png");
+        callback(dataURL);
+        canvas = null;
+}
 var data77, thestream;
 
 var frameC = 1;
 var frameLen = [1,2,3,4,5,6,7,8,9,10];
 function getUserMedia_Aux(options) {
+	/*
             var video = options.video;
             if (video) {
                 video.srcObject = thestream;
                 video.play();
                 video.addEventListener("pause", function(e){video.play()})
             }
+	    */
             options.onsuccess && options.onsuccess(thestream);
 }
 
 
   function start(){
-    var player = new MJPEG.Player("player", "http://127.0.0.1:1234/stream?url=" + window.location.hash.replace("#","") + "&t=" + new Date().getTime());
+    var player = new MJPEG.Player("player", window.location.hash.replace("#",""));
     player.start();
    }
 
@@ -75,9 +93,7 @@ function getUserMedia_Aux(options) {
 
     <script>
 function main(){
-  if(localStorage.getItem("rtcmode") === "transmit"){
     start();
-  }
 }
     </script>
     <body onload='main()'>
@@ -142,7 +158,7 @@ function main(){
       frameC++;
       if(frameC% 6 === 0){
         if(c.toDataURL().length < 50000){
-         window.location.reload(true);
+     //    window.location.reload(true);
         }
         
         function isArraySame(){
@@ -156,7 +172,7 @@ function main(){
           return true;
         }
         if(isArraySame()){
-         window.location.reload(true);
+      //   window.location.reload(true);
 
         }
       }
@@ -176,7 +192,7 @@ function main(){
                         setTimeout(
                         function (){
                           if(frameLen[9] == 10){
-                            window.location.reload(true);
+                         //   window.location.reload(true);
                           }
                         }
                         , 8*1000);
@@ -409,6 +425,6 @@ function download() {
             </script>
 
 
-        <canvas style='height:1200px;width:1600px;display:none;position:absolute' width=1600 height=1200 id='player'></canvas>
+        <canvas style='height:1200px;width:1600px;position:absolute' width=1600 height=1200 id='player'></canvas>
         <canvas style='height:1200px;width:1600px;display:none;position:absolute' width=1600 height=1200 id='recCanvas'></canvas>
 </html>

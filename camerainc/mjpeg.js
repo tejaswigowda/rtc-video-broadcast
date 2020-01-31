@@ -72,9 +72,10 @@ var MJPEG = (function(module) {
     },1200);
    
     }
-    options.onError = function() { window.location.reload() }
+    options.onError = function() {// window.location.reload() 
+    }
     options.onStop = function() { 
-      window.location.reload(true); 
+    //  window.location.reload(true); 
       }
 
     self.stream = new module.Stream(options);
@@ -98,7 +99,10 @@ var MJPEG = (function(module) {
     }
 
     function updateFrame(img) {
+	    
         img.crossOrigin = 'Anonymous';
+       convertImgToDataURLviaCanvas(img, function(data){
+       
         var srcRect = {
           x: 0, y: 0,
           width: img.naturalWidth,
@@ -109,6 +113,7 @@ var MJPEG = (function(module) {
           height: canvas.height
         });
       try {
+	      console.log(data);
               context.drawImage(img,
                 srcRect.x,
                 srcRect.y,
@@ -119,16 +124,7 @@ var MJPEG = (function(module) {
                 dstRect.width,
                 dstRect.height
               );
-      //  console.log(".");
-      data77 = canvas.toDataURL();
-      frameLen.shift();
-      frameLen.push(data77.length);
-      frameC++;
       if(frameC% 8 === 0){
-        if(canvas.toDataURL().length < 50000){
-         window.location.reload();
-        }
-        
         function isArraySame(){
           for(var i = 0; i < frameLen.length-1; i++){
             for(var j = i; j < frameLen.length; j++){
@@ -140,17 +136,18 @@ var MJPEG = (function(module) {
           return true;
         }
         if(isArraySame()){
-         window.location.reload();
+      //   window.location.reload();
 
         }
       }
       } catch (e) {
         // if we can't draw, don't bother updating anymore
         self.stop();
-        window.location.reload();
+      //  window.location.reload();
         console.log("!");
         throw e;
       }
+       });
     }
 
     self.start = function() { 
