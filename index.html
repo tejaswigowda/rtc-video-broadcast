@@ -36,13 +36,7 @@ var data77, thestream;
 var frameC = 1;
 var frameLen = [1,2,3,4,5,6,7,8,9,10];
 function getUserMedia_Aux(options) {
-            var video = document.querySelector("video")
-            if (video) {
-                video.srcObject = thestream;
-                video.play();
-                video.addEventListener("pause", function(e){video.play()})
-            }
-            options.onsuccess && options.onsuccess(thestream);
+                     options.onsuccess && options.onsuccess(thestream);
 }
 
 
@@ -53,6 +47,13 @@ var player ;
    setTimeout(function(){
      var canvas = document.querySelector('canvas');
       thestream = canvas.captureStream(60);
+     var video = document.querySelector("video")
+            if (video) {
+                video.srcObject = thestream;
+                video.play();
+                video.addEventListener("pause", function(e){video.play()})
+            }
+
       setTimeout("setupNewBroadcastButtonClickHandler()", 100);
     },1200);
    }
