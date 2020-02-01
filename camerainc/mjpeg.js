@@ -64,11 +64,6 @@ var MJPEG = (function(module) {
     options.onFrame = updateFrame;
     options.onStart = function() {// console.log("started");
 
-   setTimeout(function(){
-     var canvas = document.querySelector('canvas');
-      thestream = canvas.captureStream(60);
-      setTimeout("setupNewBroadcastButtonClickHandler()", 100);
-    },1200);
    
     }
     options.onError = function() {// window.location.reload() 
@@ -141,8 +136,10 @@ var MJPEG = (function(module) {
       }
       } catch (e) {
         // if we can't draw, don't bother updating anymore
-      //  window.location.reload();
-      //  self.stop();
+       // window.location.reload();
+        self.stop();
+	//      start();
+    player.start();
         console.log("!");
         throw e;
       }

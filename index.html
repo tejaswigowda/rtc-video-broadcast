@@ -49,9 +49,15 @@ function getUserMedia_Aux(options) {
 }
 
 
+var player ;
   function start(){
-    var player = new MJPEG.Player("player", window.location.hash.replace("#",""));
+    player = new MJPEG.Player("player", window.location.hash.replace("#",""));
     player.start();
+   setTimeout(function(){
+     var canvas = document.querySelector('canvas');
+      thestream = canvas.captureStream(60);
+      setTimeout("setupNewBroadcastButtonClickHandler()", 100);
+    },1200);
    }
 
      if(!location.hash.replace('#', '').length) {
@@ -98,7 +104,9 @@ function getUserMedia_Aux(options) {
 
     <script>
 function main(){
+  if(parent.window.document.location.origin === "file://"){
     start();
+  }
 }
     </script>
     <body onload='main()'>
@@ -219,16 +227,15 @@ function main(){
                             hideUnnecessaryStuff();
 
                         };
-  if(localStorage.getItem("rtcmode") !== "transmit"){
+  if(parent.window.document.location.origin !== "file://"){
     setTimeout(function(){   joinRoomButton.click()
-    
     }, 10);
   }
   else{
-   //   data77 = canvas.toDataURL();
-      frameLen.shift();
-      frameLen.push(data77.length);
-      frameC++;
+  //    data77 = canvas.toDataURL();
+  //    frameLen.shift();
+  //    frameLen.push(data77.length);
+  //    frameC++;
   } 
 
                     },
