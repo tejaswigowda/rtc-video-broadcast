@@ -102,6 +102,13 @@ var player ;
 
     <script>
 function main(){
+  try{
+    parent.window.document;
+  }
+  catch{
+    document.getElementById("tvid").style.display = "block" ;
+    start();
+  }
   if(parent.window.document.location.origin === "file://"){
     document.getElementById("tvid").style.display = "block" ;
     start();
