@@ -21,7 +21,7 @@ void IRAM_ATTR resetModule() {
 
 
 //#define ENABLE_SSD1306
-//#define SOFTAP_MODE       //The comment will be connected to the specified ssid
+#define SOFTAP_MODE       //The comment will be connected to the specified ssid
 
 
 //#define knmi
@@ -185,7 +185,7 @@ void setup()
     config.pixel_format = PIXFORMAT_JPEG;
     //init with high specs to pre-allocate larger buffers
     config.frame_size = FRAMESIZE_UXGA;
-    config.jpeg_quality = 20;
+    config.jpeg_quality = 10;
     config.fb_count = 1;
 
     // camera init
