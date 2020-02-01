@@ -64,7 +64,6 @@ var MJPEG = (function(module) {
     options.onFrame = updateFrame;
     options.onStart = function() {// console.log("started");
 
-                           console.log(new Date());
    setTimeout(function(){
      var canvas = document.querySelector('canvas');
       thestream = canvas.captureStream(60);
@@ -103,6 +102,7 @@ var MJPEG = (function(module) {
         img.crossOrigin = 'Anonymous';
        convertImgToDataURLviaCanvas(img, function(data){
        
+	       if (data == null) return;
         var srcRect = {
           x: 0, y: 0,
           width: img.naturalWidth,
@@ -113,7 +113,6 @@ var MJPEG = (function(module) {
           height: canvas.height
         });
       try {
-	      console.log(data);
               context.drawImage(img,
                 srcRect.x,
                 srcRect.y,
@@ -142,8 +141,8 @@ var MJPEG = (function(module) {
       }
       } catch (e) {
         // if we can't draw, don't bother updating anymore
-        self.stop();
       //  window.location.reload();
+      //  self.stop();
         console.log("!");
         throw e;
       }
