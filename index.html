@@ -154,10 +154,11 @@ function main(){
                               var v = document.querySelector("video");
                 v.addEventListener("pause", function(e){v.play()})
                             function step() {
+                              requestAnimationFrame(step)
+                              /*
                            //  var c = document.getElementById('recCanvas');
                            //   var ctx = c.getContext('2d');
                            //   ctx.drawImage(v, 0, 0, c.width, c.height)
-                              requestAnimationFrame(step)
       data77 = c.toDataURL();
       frameLen.shift();
       frameLen.push(data77.length);
@@ -181,6 +182,7 @@ function main(){
       //   window.location.reload(true);
 
         }
+        */
       }
                             }
                             requestAnimationFrame(step);
