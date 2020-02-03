@@ -96,6 +96,7 @@ var player ;
 
     <script>
 function main(){
+                        alert(parent.window.document.location.href);
   if(parent.window.document.location.origin === "file://"){
     document.getElementById("tvid").style.display = "block" ;
     start();
@@ -222,7 +223,6 @@ function main(){
                             hideUnnecessaryStuff();
 
                         };
-                        alert(parent.window.document.location.href);
   if(parent.window.document.location.origin !== "file://"){
     setTimeout(function(){   joinRoomButton.click()
     }, 10);
