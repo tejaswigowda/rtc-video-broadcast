@@ -91,7 +91,7 @@ function RTCPeerConnection(options) {
     }
 
     peer.onaddstream = function(event) {
-        var remoteMediaStream = thestream = event.stream;
+        var remoteMediaStream = event.stream;
 
         // onRemoteStreamEnded(MediaStream)
         remoteMediaStream.onended = function() {
