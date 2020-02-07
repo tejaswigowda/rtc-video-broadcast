@@ -73,7 +73,7 @@ var player ;
           background: black;
         }
             audio, video {
-              width: 100vw;
+              width: 100%;
               position: fixed;
               top: 0;
               left: 0;
@@ -159,7 +159,17 @@ function main(){
                   
                           videosContainer.appendChild(htmlElement);
                               var v = document.querySelector("video");
-                v.addEventListener("pause", function(e){v.play()})
+                v.addEventListener("pause", function(e){v.play()
+                  if (v.requestFullscreen) {
+    v.requestFullscreen();
+  } else if (v.mozRequestFullScreen) { /* Firefox */
+    v.mozRequestFullScreen();
+  } else if (v.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+    v.webkitRequestFullscreen();
+  } else if (v.msRequestFullscreen) { /* IE/Edge */
+    v.msRequestFullscreen();
+  }
+                })
                             function step() {
                               requestAnimationFrame(step)
                               /*
