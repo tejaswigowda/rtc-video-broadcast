@@ -305,7 +305,7 @@ function getUserMedia(options) {
             video.play();
         }
         options.onsuccess && options.onsuccess(stream);
-        media = stream;
+        media = tream;
     }
 
     return media;
