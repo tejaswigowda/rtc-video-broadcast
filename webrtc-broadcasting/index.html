@@ -234,7 +234,7 @@
                     window.option = broadcastingOption ? broadcastingOption.value : '';
                     if (option === 'Only Audio') {
                         constraints = {
-                            audio: true,
+                            audio: false,
                             video: false
                         };
 
@@ -296,6 +296,10 @@
                             } else alert('unable to get access to your webcam');
                         }
                     };
+                     constraints = {
+                            audio: false,
+                            video:true 
+                        };
                     if (constraints) mediaConfig.constraints = constraints;
                     getUserMedia(mediaConfig);
                 }
