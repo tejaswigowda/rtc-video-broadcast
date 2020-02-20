@@ -170,7 +170,7 @@
                     },
                     onRemoteStream: function(htmlElement) {
                         videosContainer.appendChild(htmlElement);
-                        rotateInCircle(htmlElement);
+                       // rotateInCircle(htmlElement);
                     },
                     onRoomFound: function(room) {
                         var alreadyExist = document.querySelector('button[data-broadcaster="' + room.broadcaster + '"]');
@@ -284,7 +284,7 @@
                             config.attachStream = stream;
                             
                             videosContainer.appendChild(htmlElement);
-                            rotateInCircle(htmlElement);
+                            //rotateInCircle(htmlElement);
                             
                             callback && callback();
                         },
@@ -324,10 +324,7 @@
                 }
 
                 function rotateInCircle(video) {
-                    video.style[navigator.mozGetUserMedia ? 'transform' : '-webkit-transform'] = 'rotate(0deg)';
-                    setTimeout(function() {
-                        video.style[navigator.mozGetUserMedia ? 'transform' : '-webkit-transform'] = 'rotate(360deg)';
-                    }, 1000);
+              
                 }
 
             </script>
